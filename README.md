@@ -7,7 +7,7 @@ A small Django portfolio project (personal site) with a `home_page` app. This re
 - Django project: `Sagar_portfolio/`
 - App: `home_page/`
 - SQLite database: `db.sqlite3`
-- Virtual environment: `env/` (not committed)
+- Virtual environment: `env/` 
 
 The app provides these pages (mapped in `home_page/urls.py`): home, about, contact, gallery, and a sample `blog_users` view.
 
