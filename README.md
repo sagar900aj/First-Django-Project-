@@ -17,6 +17,34 @@ This file explains how to run the project locally, where templates and static fi
 
 ---
 
+## Clone this repository
+
+You can clone this repository to another computer using HTTPS or SSH. Replace `<your-branch>` with a branch name if you want a non-default branch.
+
+HTTPS (works without SSH keys):
+
+```powershell
+# from any folder on Windows PowerShell
+git clone https://github.com/sagar900aj/Django.git
+cd Django\Sagar_portfolio
+```
+
+SSH (recommended if you have an SSH key configured on GitHub):
+
+```powershell
+git clone git@github.com:sagar900aj/Django.git
+cd Django\Sagar_portfolio
+```
+
+Notes:
+- If you cloned the repository into a parent folder, `cd` into the `Sagar_portfolio` directory before running the project commands below.
+- If you need to fetch a specific branch:
+
+```powershell
+git fetch origin
+git checkout -b <your-branch> origin/<your-branch>
+```
+
 ## Quick setup (Windows / PowerShell)
 
 Open PowerShell and run the following commands from the repository root (`C:\Django\Sagar_portfolio`):
@@ -25,11 +53,12 @@ Open PowerShell and run the following commands from the repository root (`C:\Dja
 # Change to project directory
 cd C:\Django\Sagar_portfolio
 
-# Activate the project's virtual environment (PowerShell)
+# Create and activate a virtual environment (if you don't have env/)
+python -m venv env
 ..\env\Scripts\Activate.ps1
 
-# Optional: install dependencies if you have a requirements.txt
-pip install -r requirements.txt
+# Optional: install dependencies if a requirements.txt exists
+if (Test-Path requirements.txt) { pip install -r requirements.txt }
 
 # Apply database migrations
 python manage.py migrate
