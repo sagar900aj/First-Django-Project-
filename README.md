@@ -1,176 +1,64 @@
-# Sagar_portfolio (Django)
+# Sagar's Portfolio (Django)
 
-A small Django portfolio project (personal site) with a `home_page` app. This repository demonstrates a typical Django project structure with templates and static files split correctly.
+A personal portfolio website built with Django, featuring home, about, contact, and gallery pages.
 
-## What this project contains
+## What's included
 
-- Django project: `Sagar_portfolio/`
-- App: `home_page/`
-- SQLite database: `db.sqlite3`
-- Virtual environment: `env/` 
+- Personal portfolio website with multiple pages
+- Built using Django web framework
+- Includes templates and static files for styling
 
-The app provides these pages (mapped in `home_page/urls.py`): home, about, contact, gallery, and a sample `blog_users` view.
+## How to run this project
 
-## Why this README
-
-This file explains how to run the project locally, where templates and static files live, and best practices for adding CSS/JS.
-
----
-
-## Clone this repository
-
-You can clone this repository to another computer using HTTPS or SSH. Replace `<your-branch>` with a branch name if you want a non-default branch.
-
-HTTPS (works without SSH keys):
+### Step 1: Clone the repository
 
 ```powershell
-# from any folder on Windows PowerShell
+# Using HTTPS (easiest method)
 git clone https://github.com/sagar900aj/Django.git
 cd Django\Sagar_portfolio
 ```
 
-SSH (recommended if you have an SSH key configured on GitHub):
+### Step 2: Set up Python environment
 
 ```powershell
-git clone git@github.com:sagar900aj/Django.git
-cd Django\Sagar_portfolio
-```
-
-Notes:
-- If you cloned the repository into a parent folder, `cd` into the `Sagar_portfolio` directory before running the project commands below.
-- If you need to fetch a specific branch:
-
-```powershell
-git fetch origin
-git checkout -b <your-branch> origin/<your-branch>
-```
-
-## Quick setup (Windows / PowerShell)
-
-Open PowerShell and run the following commands from the repository root (`C:\Django\Sagar_portfolio`):
-
-```powershell
-# Change to project directory
-cd C:\Django\Sagar_portfolio
-
-# Create and activate a virtual environment (if you don't have env/)
+# Create virtual environment
 python -m venv env
+
+# Activate virtual environment (PowerShell)
 ..\env\Scripts\Activate.ps1
+# OR for Command Prompt use:
+# ..\env\Scripts\activate.bat
 
-# Optional: install dependencies if a requirements.txt exists
-if (Test-Path requirements.txt) { pip install -r requirements.txt }
+# Install required packages
+pip install -r requirements.txt
+```
 
-# Apply database migrations
+### Step 3: Start the website
+
+```powershell
+# Set up database
 python manage.py migrate
 
-# Run the development server
+# Run development server
 python manage.py runserver
 ```
 
-Notes:
-- If `Activate.ps1` fails due to PowerShell execution policy, you can run PowerShell as Administrator and allow script execution, or use the `Activate.bat` file from Command Prompt: `..\env\Scripts\activate.bat`.
-- In development (DEBUG=True) Django's `runserver` will serve app static files automatically.
+### Step 4: View the website
 
-### Collect static files (for production)
+Open your browser and go to: http://127.0.0.1:8000/
 
-If you deploy or want to collect static files into a single folder:
-
-```powershell
-# Ensure STATIC_ROOT is set in settings.py (example: BASE_DIR / 'staticfiles')
-python manage.py collectstatic --noinput
-```
-
----
-
-## Project structure (important parts)
-
-Recommended structure for templates and static assets in this app (`home_page`):
+## Project structure
 
 ```
-home_page/
-  templates/
-    base.html              # shared site layout (nav, footer, css/js includes)
-    home/
-      home.html            # page-specific template
-      about_me.html
-      contact_me.html
-      gallery.html
-  static/
-    home/
-      css/
-        style.css
-      js/
-        main.js
+Sagar_portfolio/       # Main project folder
+├── home_page/        # Main app
+│   ├── templates/    # HTML templates
+│   └── static/       # CSS, JavaScript, images
+└── manage.py         # Django management script
 ```
 
-Why this layout?
-- Put HTML templates in `templates/` (Django's template loader finds them).
-- Put CSS/JS in `static/` (Django collects and serves these; templates should NOT contain CSS/JS files).
-- Use `{% load static %}` and `{% static 'home/css/style.css' %}` in templates to reference static files.
+## Troubleshooting
 
-Example in `base.html` header:
-
-```django
-{% load static %}
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
-<link rel="stylesheet" href="{% static 'home/css/style.css' %}">
-```
-
-And at the bottom of `base.html`:
-
-```django
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="{% static 'home/js/main.js' %}"></script>
-```
-
----
-
-## Views: how to render templates
-
-Prefer `render()` for simplicity and context passing. Example in `home_page/views.py`:
-
-```python
-from django.shortcuts import render
-
-def home(request):
-    return render(request, 'home/home.html')
-```
-
-If you namespace templates under `home/`, reference them with that path (as above). If you place `home.html` directly under `templates/` (not recommended), you would use `'home.html'`.
-
----
-
-## Settings notes (`Sagar_portfolio/settings.py`)
-
-Recommended static settings (you already have `STATIC_URL`):
-
-```python
-STATIC_URL = 'static/'
-# Optional during development if you want a central project static dir
-# STATICFILES_DIRS = [ BASE_DIR / 'static' ]
-# For production (collectstatic):
-# STATIC_ROOT = BASE_DIR / 'staticfiles'
-```
-
-Keep `DEBUG = True` while developing.
-
----
-
-## Common issues & troubleshooting
-
-- "Templates not found": Make sure `APP_DIRS=True` is set in `TEMPLATES` (it is) and templates live under `home_page/templates/`.
-- "Static files not loading": Ensure you used `{% load static %}` and pointed to the correct path (e.g. `home/css/style.css`). In production, run `collectstatic` and serve `STATIC_ROOT`.
-- "Django not found" when running manage.py: Activate the virtual environment before running commands.
-
----
-
-## Contributing / Next steps
-
-- Add or edit templates in `home_page/templates/home/`.
-- Add CSS/JS to `home_page/static/home/css/` and `home_page/static/home/js/`.
-- If you add new Python deps, update `requirements.txt` with `pip freeze > requirements.txt` while the virtualenv is active.
-
----
-
-
-If you want me to also generate or update `base.html`, `home/home.html`, or the static files (`style.css`, `main.js`), tell me which files to create or overwrite and I'll add them.
+- If `Activate.ps1` fails, try using Command Prompt with: `..\env\Scripts\activate.bat`
+- Make sure Python and Git are installed on your computer
+- Virtual environment must be activated before running any `python manage.py` commands
